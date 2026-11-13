@@ -6,7 +6,7 @@
 
 <p align="center">
   Desktop app for managing several Claude Code accounts on one Mac: profiles,
-  live sessions, plan usage limits, memory, skills, settings and MCP servers in one place.
+  live sessions, plan usage limits, startup context, memory, skills, settings and MCP servers in one place.
 </p>
 
 <p align="center">
@@ -37,6 +37,20 @@ shows everything about each of them side by side.
   and all profiles compared
 - 🔔 **Menu bar item** with session and weekly use, plus notifications at 80% and 100%
 - 🟢 **Live sessions** per profile with resume commands
+- 🥧 **Startup context** — what a session sends before Claude's first reply: system prompt,
+  built-in tools, MCP servers, skills, agents, CLAUDE.md, rules and memory, in tokens against
+  the model's context window and what stays free. For the whole profile and for each project
+- 🎛️ **What sets each part's size** — pick a part on the chart to see the least and the most it
+  can take, what it got and what it's allowed, and change it:
+  - **Skills**: the skill listing budget (1% of the window by default; with many skills Claude Code
+    drops descriptions, and the app shows which), the description limit, each skill listed,
+    by name only, only as `/name` or off, and the skills that ship with Claude Code
+  - **MCP servers**: tool definitions loaded on demand, while they fit in a share of the window,
+    or always; claude.ai connectors; each server on or off in a project
+  - **Built-in tools, system prompt, CLAUDE.md and rules, memory**: the Artifact and SendFeedback
+    tools, commit and PR instructions, single instruction files, auto memory and the MEMORY.md cut-off
+  - Changes save to the profile or to a project's own settings, and the chart previews them first
+- 📈 **Recent sessions** — how the startup context grew or shrank, and which part moved
 - 🧠 **Memory, CLAUDE.md, rules, skills, agents, commands and output styles**, all editable
 - ⚙️ **settings.json, plugins, MCP servers and connectors**
 - 📁 **Projects** across all profiles with their Claude files and token usage
@@ -86,6 +100,34 @@ an update button appears at the bottom of the sidebar: **Install and restart** d
 replaces the app and restarts it.
 
 To check manually, use **Check for Updates…** in the menu bar item.
+
+## Troubleshooting
+
+### Update fails with *“Read-only file system (os error 30)”*
+
+The error names a path with `AppTranslocation` in it. macOS runs an app that came from the
+internet and wasn't moved with Finder from a temporary **read-only** copy (App Translocation),
+so the update can't replace it. It happens when the app is opened straight from the `.dmg` or
+from Downloads, or was copied into Applications some other way than dragging in Finder.
+
+1. Quit Claude Profiles (**⌘Q**) and eject the `.dmg` if it's mounted.
+2. In Finder, drag **Claude Profiles** into **Applications** (replace the old copy if asked).
+3. Remove the quarantine flag:
+
+   ```bash
+   xattr -dr com.apple.quarantine "/Applications/Claude Profiles.app"
+   ```
+
+4. Open it from **Applications** and click **Install and restart** again.
+
+To check, `xattr "/Applications/Claude Profiles.app"` should no longer list
+`com.apple.quarantine`. If the update still fails, download the latest `.dmg`, drag the app
+into Applications over the old one and run step 3 — your profiles and settings stay as they are.
+
+### macOS says the app can't be verified
+
+See step 3 of [Installation](#installation): **Open Anyway** in Privacy & Security, or the
+same `xattr` command.
 
 ## Good to know
 
