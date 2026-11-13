@@ -120,6 +120,8 @@ from Downloads, or was copied into Applications some other way than dragging in 
 
 4. Open it from **Applications** and click **Install and restart** again.
 
+From 0.6.1 the update dialog notices this itself and shows these steps instead of the error.
+
 To check, `xattr "/Applications/Claude Profiles.app"` should no longer list
 `com.apple.quarantine`. If the update still fails, download the latest `.dmg`, drag the app
 into Applications over the old one and run step 3 — your profiles and settings stay as they are.
