@@ -62,7 +62,7 @@ shows everything about each of them side by side.
 | File | Requirements |
 | --- | --- |
 | `Claude-Profiles-<version>.dmg` — disk image | macOS 10.13+, Intel or Apple Silicon |
-| `Claude-Profiles-<version>-setup.exe` — installer | Windows 10 or 11, 64-bit (x64) |
+| `Claude-Profiles-<version>-setup.exe` — installer | Windows 10 or 11, 64-bit (x64); on ARM64, Windows 11 runs it through emulation |
 
 Get it from the **[latest release](https://github.com/e-nagornyak/claude-profiles-releases/releases/latest)**.
 
