@@ -5,13 +5,13 @@
 <h1 align="center">Claude Profiles</h1>
 
 <p align="center">
-  Desktop app for managing several Claude Code accounts on one Mac: profiles,
+  Desktop app for managing several Claude Code accounts on one computer, on macOS and Windows: profiles,
   live sessions, plan usage limits, startup context, memory, skills, settings and MCP servers in one place.
 </p>
 
 <p align="center">
   <a href="https://github.com/e-nagornyak/claude-profiles-releases/releases/latest"><img src="https://img.shields.io/github/v/release/e-nagornyak/claude-profiles-releases?label=latest&color=6366f1" alt="Latest release"></a>
-  <img src="https://img.shields.io/badge/platform-macOS-111111" alt="Platform: macOS">
+  <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows-111111" alt="Platform: macOS | Windows">
   <a href="https://github.com/e-nagornyak/claude-profiles-releases/releases"><img src="https://img.shields.io/github/downloads/e-nagornyak/claude-profiles-releases/total?color=111111" alt="Downloads"></a>
 </p>
 
@@ -31,11 +31,11 @@ shows everything about each of them side by side.
 
 ## Features
 
-- 👤 **Profiles found automatically** — `~/.claude`, `~/.claude-*` folders and
-  `CLAUDE_CONFIG_DIR=… claude` aliases in zsh, bash and fish
+- 👤 **Profiles found automatically** — `~/.claude`, `~/.claude-*` folders, the commands the app
+  made, and `CLAUDE_CONFIG_DIR=… claude` aliases in zsh, bash and fish
 - 📊 **Plan usage limits** like `/usage`: current session, weekly limits, extra usage,
   and all profiles compared
-- 🔔 **Menu bar item** with session and weekly use, plus notifications at 80% and 100%
+- 🔔 **Menu bar item** (a tray icon on Windows) with session and weekly use, plus notifications at 80% and 100%
 - 🟢 **Live sessions** per profile with resume commands
 - 🥧 **Startup context** — what a session sends before Claude's first reply: system prompt,
   built-in tools, MCP servers, skills, agents, CLAUDE.md, rules and memory, in tokens against
@@ -62,10 +62,13 @@ shows everything about each of them side by side.
 | File | Requirements |
 | --- | --- |
 | `Claude-Profiles-<version>.dmg` — disk image | macOS 10.13+, Intel or Apple Silicon |
+| `Claude-Profiles-<version>-setup.exe` — installer | Windows 10 or 11, 64-bit (x64) |
 
 Get it from the **[latest release](https://github.com/e-nagornyak/claude-profiles-releases/releases/latest)**.
 
 ## Installation
+
+### macOS
 
 1. Open the `.dmg` and drag **Claude Profiles** into **Applications**.
 2. Launch it. The app is not signed or notarized by Apple, so macOS blocks the first launch
@@ -93,17 +96,35 @@ On first use macOS may ask to let Claude Profiles read the Keychain item
 `Claude Code-credentials` — that is how it reads plan usage with each profile's own login.
 Click **Always Allow**. After an update macOS may ask once more.
 
+### Windows
+
+1. Run `Claude-Profiles-<version>-setup.exe`. It installs for your user only, without
+   administrator rights.
+2. The installer is not code-signed, so SmartScreen shows *“Windows protected your PC”*.
+   Click **More info**, then **Run anyway**. This is needed only the first time.
+3. Launch **Claude Profiles** from the Start menu.
+
+Windows support is new. Good to know:
+
+- A profile's command is a `.cmd` file in `%USERPROFILE%\.local\bin`, the folder Claude Code's
+  installer puts on your PATH. If it isn't on PATH, the app says how to add it.
+- Items shared between profiles are links. Linking a single file, such as `CLAUDE.md` or
+  `settings.json`, needs **Developer Mode** (Settings → System → For developers); without it the
+  file is copied instead and the app tells you so. Folders are always linked.
+- **Show in …** for a live session isn't available on Windows yet.
+
 ## Updates
 
 The app checks this repository on launch and every 6 hours. When a new version is out,
 an update button appears at the bottom of the sidebar: **Install and restart** downloads it,
-replaces the app and restarts it.
+replaces the app and restarts it. On Windows it runs the new installer, which closes the app
+and opens it again when it's done.
 
-To check manually, use **Check for Updates…** in the menu bar item.
+To check manually, use **Check for Updates…** in the menu bar item, or in the tray icon's menu on Windows.
 
 ## Troubleshooting
 
-### Update fails with *“Read-only file system (os error 30)”*
+### macOS: update fails with *“Read-only file system (os error 30)”*
 
 The error names a path with `AppTranslocation` in it. macOS runs an app that came from the
 internet and wasn't moved with Finder from a temporary **read-only** copy (App Translocation),
@@ -128,14 +149,20 @@ into Applications over the old one and run step 3 — your profiles and settings
 
 ### macOS says the app can't be verified
 
-See step 3 of [Installation](#installation): **Open Anyway** in Privacy & Security, or the
+See step 3 of [Installation](#macos): **Open Anyway** in Privacy & Security, or the
 same `xattr` command.
+
+### Windows: a profile's command isn't found
+
+Open **Settings → System → About → Advanced system settings → Environment Variables**, add
+`%USERPROFILE%\.local\bin` to your user's **Path**, then open a new terminal.
 
 ## Good to know
 
-- Closing the window keeps the app in the menu bar; **⌘Q** quits.
+- Closing the window keeps the app in the menu bar or tray; **⌘Q** quits on macOS, **Quit** in
+  the tray menu on Windows.
 - Profile commands are small scripts in `~/.local/bin`, so they work in any shell.
-- Deletions go to the Trash, and removing a profile never deletes its folder.
+- Deletions go to the Trash (the Recycle Bin on Windows), and removing a profile never deletes its folder.
 
 ---
 
